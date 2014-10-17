@@ -1,6 +1,8 @@
 Randomex
 ========
 
+![roll plz](logo.gif)
+
 +/- True Random generator for Elixir
 
 ```
