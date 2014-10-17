@@ -16,4 +16,19 @@ defmodule Randomex do
     :ok
   end
 
+  def range(start, stop) when stop == start, do: stop
+  def range(start, stop) when stop > start do
+    :random.uniform(stop - (start-1)) + (start-1)
+  end
+
+  def event(percent) when percent<=0, do: false
+  def event(percent) when percent>=100, do: true
+  def event(percent) do
+    case range(0, 99) do
+      x when x < percent -> true
+      _ -> false
+    end
+  end
+
+
 end
