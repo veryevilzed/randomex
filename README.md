@@ -42,4 +42,32 @@ Randomex.event(60)
 #=> false
 
 
+
+Randomex.select([1,2,3]) # Select element from list
+#=> 1
+
+Randomex.select([1,2,3])
+#=> 3
+
+Randomex.select([1,2,3])
+#=> 2
+
+
+Randomex.select([{1,10},{2,1},{3,1}]) # Select element from list, respect weight
+#=> 1
+
+Randomex.select([{1,10},{2,1},{3,1}])
+#=> 1
+
+Randomex.select([{1,10},{2,1},{3,1}])
+#=> 1
+
+Randomex.select([{1,10},{2,1},{3,1}])
+#=> 1
+
+Randomex.select([{1,10},{2,1},{3,1}])
+#=> 2
+
+Randomex.select([{1,10},{2,1},{3,1}])
+#=> 1
 ```
