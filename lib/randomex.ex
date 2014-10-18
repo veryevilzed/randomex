@@ -33,7 +33,7 @@ defmodule Randomex do
   @doc """
     Selects random weighted element
     > Enum.reduce 1..32000, {0,0,0}, fn(_, {a,b,c})->
-        case Randomex.select([{1,10}, {2,1}, {3,5}]) do
+        case Randomex.select([{1,5}, {2,1}, {3,10}]) do
           1 -> {a+1,b,c}
           2 -> {a,b+1,c}
           3 -> {a,b,c+1}
@@ -69,8 +69,6 @@ defmodule Randomex do
 
     {10560, 10687, 10753}
   """
-  def select(list = [_|_]) do
-    Enum.at(list, :random.uniform(length(list)) - 1)
-  end
+  def select(list = [_|_]), do: Enum.at(list, :random.uniform(length(list)) - 1)
 
 end
