@@ -3,7 +3,7 @@ defmodule Randomex.SeedServer do
   @max_request 170
   @max32bit_int round(:math.pow 2, 32) - 1
 
-  def start_link, do: :gen_server.start_link({ :local, :random_seed_server }, __MODULE__, [], [])
+  def start_link, do: :gen_server.start_link({ :local, :randomex_seed_server }, __MODULE__, [], [])
 
   def init([]), do: {:ok, 0}
 

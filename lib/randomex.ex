@@ -8,7 +8,7 @@ defmodule Randomex do
     Supervisor.start_link(children, opts)
   end
 
-  def get_seed, do: :gen_server.call(:random_seed_server, :random)
+  def get_seed, do: :gen_server.call(:randomex_seed_server, :random)
 
   def apply_seed do
     {a,b,c} = Randomex.get_seed
