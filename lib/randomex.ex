@@ -1,6 +1,7 @@
 defmodule Randomex do
   use Application
 
+  
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
     children = [ worker(Randomex.SeedServer, []) ]
@@ -8,17 +9,19 @@ defmodule Randomex do
     Supervisor.start_link(children, opts)
   end
 
-  def get_seed, do: :gen_server.call(:randomex_seed_server, :random)
+  def uniform(), do: GenServer.call(:randomex_seed_server, {:uniform, nil})
+  def uniform(max), do: GenServer.call(:randomex_seed_server, {:uniform, max})
+  
 
-  def apply_seed do
-    {a,b,c} = Randomex.get_seed
-    :random.seed a,b,c
-    :ok
-  end
+  @doc """
+  DEPRICATED
+  """
+  def apply_seed, do: :ok
+  
 
   def range(start, stop) when stop == start, do: stop
   def range(start, stop) when stop > start do
-    :random.uniform(stop - (start-1)) + (start-1)
+    uniform(stop - (start-1)) + (start-1)
   end
 
   def event(percent) when percent <= 0, do: false
@@ -42,9 +45,9 @@ defmodule Randomex do
 
     {19867, 2099, 10034}
   """
-  def select(list = [{_,_}|_]) do
+  def select(list = [{_,_}|_]) do 
     rnd = Enum.reduce(list, 0, fn({_, weight}, acc)-> acc + weight end)
-        |> :random.uniform
+        |> uniform
 
     {element, _} = Enum.reduce(list, {nil, rnd}, fn({element, weight}, {nil, rnd})->
         rnd = rnd - weight
@@ -69,6 +72,8 @@ defmodule Randomex do
 
     {10560, 10687, 10753}
   """
-  def select(list = [_|_]), do: Enum.at(list, :random.uniform(length(list)) - 1)
+  def select(list = [_|_]) do 
+    Enum.at(list, uniform(length(list)) - 1)
+  end
 
 end
