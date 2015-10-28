@@ -1,6 +1,6 @@
 defmodule Randomex.SeedServer do
   use GenServer
-  @max_request 170
+  @max_request 1700
   @max32bit_int round(:math.pow 2, 32) - 1
   @rng :sfmt
 
@@ -19,14 +19,21 @@ defmodule Randomex.SeedServer do
     handle_call({:uniform, max}, from, @max_request)    
   end
 
-
   def handle_call({:uniform, nil}, _, count) do
     {:reply, @rng.uniform, count-1}
   end
 
   def handle_call({:uniform, max}, _, count) do
     {:reply, @rng.uniform(max), count-1}
-  end
-  
+  end  
+
+  def handle_call({:shuffle, list}, _, count) do
+    ret = :lists.keysort(1, Enum.reduce(list, [], fn(x, ret)-> 
+        [{:sfmt.uniform, x} | ret]
+      end))
+      |> Enum.map(fn({_,x})-> x end)
+
+    {:reply, ret, count-1}
+  end  
 
 end

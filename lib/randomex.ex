@@ -11,7 +11,7 @@ defmodule Randomex do
 
   def uniform(), do: GenServer.call(:randomex_seed_server, {:uniform, nil})
   def uniform(max), do: GenServer.call(:randomex_seed_server, {:uniform, max})
-  
+  def shuffle(list), do: GenServer.call(:randomex_seed_server, {:shuffle, list})  
 
   @doc """
   DEPRICATED
