@@ -16,7 +16,11 @@ defmodule Randomex do
   @doc """
   DEPRICATED
   """
-  def apply_seed, do: :ok
+  def apply_seed do
+    <<a :: 32, b :: 32, c :: 32, _ :: binary >> = Enum.reduce 1..45, :crypto.rand_bytes(16), fn(_, acc) -> :crypto.md5(acc) end
+    :random.seed(a,b,c)    
+    :ok
+  end
   
 
   def range(start, stop) when stop == start, do: stop
