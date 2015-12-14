@@ -1,27 +1,30 @@
 defmodule Randomex do
   use Application
 
-  
+
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
-    children = [ worker(Randomex.SeedServer, []) ]
+    children = 	[
+					worker(Randomex.SeedServer, []),
+					worker(Randomex.InnerReceiver, []) 
+				]
     opts = [strategy: :one_for_one, name: Randomex.Supervisor, max_restarts: 5000, max_seconds: 10]
     Supervisor.start_link(children, opts)
   end
 
   def uniform(), do: GenServer.call(:randomex_seed_server, {:uniform, nil})
   def uniform(max), do: GenServer.call(:randomex_seed_server, {:uniform, max})
-  def shuffle(list), do: GenServer.call(:randomex_seed_server, {:shuffle, list})  
+  def shuffle(list), do: GenServer.call(:randomex_seed_server, {:shuffle, list})
 
   @doc """
   DEPRICATED
   """
   def apply_seed do
     <<a :: 32, b :: 32, c :: 32, _ :: binary >> = Enum.reduce 1..45, :crypto.rand_bytes(16), fn(_, acc) -> :crypto.md5(acc) end
-    :random.seed(a,b,c)    
+    _ = :random.seed(a,b,c)
     :ok
   end
-  
+
 
   def range(start, stop) when stop == start, do: stop
   def range(start, stop) when stop > start do
@@ -49,7 +52,7 @@ defmodule Randomex do
 
     {19867, 2099, 10034}
   """
-  def select(list = [{_,_}|_]) do 
+  def select(list = [{_,_}|_]) do
     rnd = Enum.reduce(list, 0, fn({_, weight}, acc)-> acc + weight end)
         |> uniform
 
@@ -76,7 +79,7 @@ defmodule Randomex do
 
     {10560, 10687, 10753}
   """
-  def select(list = [_|_]) do 
+  def select(list = [_|_]) do
     Enum.at(list, uniform(length(list)) - 1)
   end
 
