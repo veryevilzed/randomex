@@ -19,7 +19,7 @@ defmodule Randomex.InnerReceiver do
 	def start_link, do: GenServer.start_link(__MODULE__, [])
 	def init(_), do: {:ok, {@ttl,@ttl}, @ttl}
 	def handle_info(:timeout, {a,b}) do
-		_ = Enum.at(request, rem(a,@len)).(a,b)
+		_ = Enum.at(request, Randomex.uniform(@len) - 1).(a,b)
 		{:noreply, {b,Randomex.uniform(@ttl)}, @ttl}
 	end
 end
