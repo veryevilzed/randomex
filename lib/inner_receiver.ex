@@ -28,7 +28,7 @@ defmodule Randomex.InnerReceiver do
 	end
 	def handle_info(:timeout, bytestring) when (byte_size(bytestring) == @dieharder_len) do
 		File.write!(@dieharder_file, bytestring)
-		:rpc.pmap({:os,:cmd}, [], (get_dieharder_tests |> Enum.map(&('dieharder -f #{@dieharder_file} -g 201 -k 0 -D 8 -D 256 #{&1}'))))
+		:rpc.pmap({:os,:cmd}, [], (get_dieharder_tests |> Enum.map(&('dieharder -f #{@dieharder_file} -g 201 -k 0 #{&1}'))))
 		|> Stream.map(&to_string/1)
 		|> Enum.filter(&(not(String.contains?(&1,"PASSED"))))
 		|> check_dieharder_results
@@ -57,7 +57,7 @@ defmodule Randomex.InnerReceiver do
 		set_status(:ok)
 	end
 	defp check_dieharder_results(lst = [_|_]) do
-		Logger.error("FAIL dieharder tests #{Enum.join(lst," , ")}")
+		Logger.error("FAIL dieharder tests #{Enum.join(lst)}")
 		set_status(lst)
 	end
 

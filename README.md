@@ -3,17 +3,27 @@ Randomex
 
 ![roll plz](logo.gif)
 
+To enable dieharder RNG monitoring, use config (dieharder version 3.31.1 required)
 
+```
+config :randomex,
+	dieharder: true
+```
 
+To get dieharder status, execute
+
+```
+Randomex.InnerReceiver.get_status
+```
 
 Helpers:
 
 ```
-Randomex.range(0, 100) # Generate random number from "a" to "b" 
-#=> 48 
+Randomex.range(0, 100) # Generate random number from "a" to "b"
+#=> 48
 
 Randomex.range(0, 100)
-#=> 15 
+#=> 15
 
 Randomex.range(0, 100)
 #=> 0
