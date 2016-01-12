@@ -3,7 +3,7 @@ defmodule Randomex.InnerReceiver do
 	require Logger
 	@ttl 10
 	@max32bit_int ((:math.pow(2, 32) |> round) - 1)
-	@dieharder_len 10000000
+	@dieharder_len 100000000
 	@dieharder_file "#{:code.priv_dir(:randomex) |> :erlang.list_to_binary}/dieharder.txt"
 	@ets_tab :randomex_dieharder
 
@@ -26,7 +26,7 @@ defmodule Randomex.InnerReceiver do
 		num = Randomex.uniform(@max32bit_int)
 		{:noreply, nil, rem(@ttl,num)}
 	end
-	def handle_info(:timeout, bytestring) when (byte_size(bytestring) == @dieharder_len) do
+	def handle_info(:timeout, bytestring) when ((byte_size(bytestring) / 4) == @dieharder_len) do
 		File.write!(@dieharder_file, bytestring)
 		:rpc.pmap({:os,:cmd}, [], (get_dieharder_tests |> Enum.map(&('dieharder -f #{@dieharder_file} -g 201 -k 0 #{&1}'))))
 		|> Stream.map(&to_string/1)
@@ -34,7 +34,7 @@ defmodule Randomex.InnerReceiver do
 		|> check_dieharder_results
 		{:noreply, <<>>, @ttl}
 	end
-	def handle_info(:timeout, bytestring) when (byte_size(bytestring) < @dieharder_len) do
+	def handle_info(:timeout, bytestring) when ((byte_size(bytestring) / 4) < @dieharder_len) do
 		num = Randomex.uniform(@max32bit_int)
 		{:noreply, <<num::32>><>bytestring, rem(@ttl,num)}
 	end
