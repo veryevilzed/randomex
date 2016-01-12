@@ -1,8 +1,10 @@
 defmodule Randomex do
   use Application
+  @ets_tab :randomex_dieharder
 
 
   def start(_type, _args) do
+    @ets_tab = :ets.new(@ets_tab, [:public, :named_table, :ordered_set, {:write_concurrency, true}, {:read_concurrency, true}, :protected])
     import Supervisor.Spec, warn: false
     children = 	[
 					worker(Randomex.SeedServer, []),

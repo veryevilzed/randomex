@@ -12,7 +12,7 @@ defmodule Randomex.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:sfmt],
+    [applications: [:logger,:sfmt],
      mod: {Randomex, []}]
   end
 
