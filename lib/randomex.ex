@@ -1,6 +1,6 @@
 defmodule Randomex do
   use Application
-  @ets_tab :randomex_dieharder
+  @ets_tab :randomex_monitor
 
 
   def start(_type, _args) do

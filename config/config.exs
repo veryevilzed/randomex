@@ -23,7 +23,7 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 	config :randomex,
-		dieharder: true
+		monitoring: true
 	config :logger, :console,
 		level: :debug,
 		format: "$date $time [$level] $metadata$message\n",
