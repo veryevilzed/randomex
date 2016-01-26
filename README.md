@@ -3,14 +3,14 @@ Randomex
 
 ![roll plz](logo.gif)
 
-To enable dieharder RNG monitoring, use config (dieharder version 3.31.1 required)
+To enable chi-square RNG monitoring, use config
 
 ```
 config :randomex,
-	dieharder: true
+	monitoring: true
 ```
 
-To get dieharder status, execute
+To get RNG monitoring status, execute
 
 ```
 Randomex.InnerReceiver.get_status

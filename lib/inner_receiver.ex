@@ -2,10 +2,10 @@ defmodule Randomex.InnerReceiver do
 	use GenServer
 	require Logger
 	@ttl 300
-	@max32bit_int ((:math.pow(2, 32) |> round) - 1)
-	@test_size 50000000
 	@ets_tab :randomex_monitor
 	@newstate %{lst: [], counter: 0}
+	@max32bit_int ((:math.pow(2, 32) |> round) - 1)
+	@test_size 50000000
 	# from 0.01
 	@chitable_left %{
 		7 => 1.2390,
