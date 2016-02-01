@@ -18,7 +18,7 @@ defmodule Randomex.Mixfile do
 
   defp deps do
     [
-      {:sfmt, github: "jj1bdx/sfmt-erlang" }
+      {:sfmt, github: "jj1bdx/sfmt-erlang", branch: "next"}
     ]
   end
 end
