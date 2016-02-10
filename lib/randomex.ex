@@ -1,12 +1,14 @@
 defmodule Randomex do
   use Application
+  @ets_tab :randomex_monitor
 
 
   def start(_type, _args) do
+    @ets_tab = :ets.new(@ets_tab, [:public, :named_table, :ordered_set, {:write_concurrency, true}, {:read_concurrency, true}, :protected])
     import Supervisor.Spec, warn: false
     children = 	[
 					worker(Randomex.SeedServer, []),
-					worker(Randomex.InnerReceiver, []) 
+					worker(Randomex.InnerReceiver, [])
 				]
     opts = [strategy: :one_for_one, name: Randomex.Supervisor, max_restarts: 5000, max_seconds: 10]
     Supervisor.start_link(children, opts)
@@ -20,7 +22,7 @@ defmodule Randomex do
   DEPRICATED
   """
   def apply_seed do
-    <<a :: 32, b :: 32, c :: 32, _ :: binary >> = Enum.reduce 1..45, :crypto.rand_bytes(16), fn(_, acc) -> :crypto.md5(acc) end
+    <<a :: 32, b :: 32, c :: 32, _ :: binary >> = Enum.reduce(1..45, :crypto.rand_bytes(16), fn(_, acc) -> :crypto.hash(:md5, acc) end)
     _ = :random.seed(a,b,c)
     :ok
   end

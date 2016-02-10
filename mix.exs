@@ -12,13 +12,13 @@ defmodule Randomex.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:sfmt],
+    [applications: [:logger,:sfmt],
      mod: {Randomex, []}]
   end
 
   defp deps do
     [
-      {:sfmt, github: "jj1bdx/sfmt-erlang" }
+      {:sfmt, github: "jj1bdx/sfmt-erlang"}
     ]
   end
 end

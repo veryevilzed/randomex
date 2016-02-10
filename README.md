@@ -3,17 +3,27 @@ Randomex
 
 ![roll plz](logo.gif)
 
+To enable chi-square RNG monitoring, use config
 
+```
+config :randomex,
+	monitoring: true
+```
 
+To get RNG monitoring status, execute
+
+```
+Randomex.InnerReceiver.get_status
+```
 
 Helpers:
 
 ```
-Randomex.range(0, 100) # Generate random number from "a" to "b" 
-#=> 48 
+Randomex.range(0, 100) # Generate random number from "a" to "b"
+#=> 48
 
 Randomex.range(0, 100)
-#=> 15 
+#=> 15
 
 Randomex.range(0, 100)
 #=> 0
