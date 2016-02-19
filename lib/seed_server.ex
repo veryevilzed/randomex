@@ -31,7 +31,7 @@ defmodule Randomex.SeedServer do
 	#
 
 	defp seed() do
-		<<a :: 32, b :: 32, c :: 32>> = :crypto.rand_bytes(12)
+		<<a :: 32, b :: 32, c :: 32>> = :crypto.strong_rand_bytes(12)
 		@rng.seed(a,b,c)
 	end
 
