@@ -31,7 +31,7 @@ defmodule Randomex.SeedServer do
 	#
 
 	defp seed() do
-		<<a :: 32, b :: 32, c :: 32, _ :: binary >> = Enum.reduce 1..45, :crypto.rand_bytes(16), fn(_, acc)  ->  :crypto.hash(:md5, acc) end
+		<<a :: 32, b :: 32, c :: 32>> = :crypto.rand_bytes(12)
 		@rng.seed(a,b,c)
 	end
 

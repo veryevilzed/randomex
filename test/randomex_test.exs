@@ -18,7 +18,7 @@ defmodule RandomexTest do
 		Randomex.range(0,a) |> IO.inspect
 		Randomex.event(a) |> IO.inspect
 		Randomex.select([a,b]) |> IO.inspect
-		Randomex.select([{a,b},{b,a}]) |> IO.inspect
+		#Randomex.select([{a,b},{b,a}]) |> IO.inspect
 		Enum.each(1..1000, fn(_) ->
 			case Enum.map(1..@test_size, fn(_) -> Randomex.uniform(@max32bit_int) end) |> Randomex.InnerReceiver.chisquare do
 				{:ok, message} -> IO.puts(message)
