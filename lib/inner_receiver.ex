@@ -1,7 +1,7 @@
 defmodule Randomex.InnerReceiver do
 	use GenServer
 	require Logger
-	@ttl 300
+	@ttl 1000
 	@ets_tab :randomex_monitor
 	@newstate %{lst: [], counter: 0}
 	@max32bit_int ((:math.pow(2, 32) |> round) - 1)
@@ -53,8 +53,8 @@ defmodule Randomex.InnerReceiver do
 	def start_link, do: GenServer.start_link(__MODULE__, [])
 	def init(_), do: {:ok, (case Application.get_env(:randomex, :monitoring) do ; nil -> nil ; false -> nil ; true -> @newstate ; end), @ttl}
 	def handle_info(:timeout, nil) do
-		num = Randomex.uniform(@max32bit_int)
-		{:noreply, nil, rem(num,@ttl)}
+		_ = Randomex.uniform(@max32bit_int)
+		{:noreply, nil, @ttl}
 	end
 	def handle_info(:timeout, %{lst: lst, counter: counter}) when (counter == @test_size) do
 		case chisquare(lst) do
@@ -68,7 +68,7 @@ defmodule Randomex.InnerReceiver do
 		{
 			:noreply,
 			Map.update!(state, :lst, &([num|&1])) |> Map.update!(:counter, &(&1+1)),
-			rem(num,@ttl)
+			@ttl
 		}
 	end
 

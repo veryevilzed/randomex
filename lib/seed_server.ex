@@ -1,6 +1,6 @@
 defmodule Randomex.SeedServer do
 	use GenServer
-	@min_request 1000000
+	@min_request 100000
 	@max32bit_int ((:math.pow(2, 32) |> round) - 1)
 	@rng :sfmt
 
