@@ -45,4 +45,5 @@ defmodule Randomex do
 
   def select(list = [_|_]), do: Enum.random(list)
 
+  def shuffle(list = [_|_]), do: Enum.shuffle(list)
 end
