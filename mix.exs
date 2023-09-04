@@ -4,8 +4,8 @@ defmodule Randomex.Mixfile do
   def project do
     [app: :randomex,
      version: "0.0.1",
-     elixir: "~> 1.0.0",
-     deps: deps]
+     elixir: "~> 1.14.0",
+     deps: []]
   end
 
   # Configuration for the OTP application
@@ -13,10 +13,6 @@ defmodule Randomex.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [applications: [],
-     mod: {Randomex, []}]
-  end
-
-  defp deps do
-    []
+     mod: []]
   end
 end
