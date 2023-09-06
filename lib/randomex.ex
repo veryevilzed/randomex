@@ -1,7 +1,6 @@
 defmodule Randomex do
 
-  def get_seed, do: :os.timestamp()
-  def apply_seed, do: :rand.seed(get_seed())
+  def apply_seed, do: :rand.seed(:exro928ss)
 
   def range(start, stop) do
     Enum.random(start..stop)
