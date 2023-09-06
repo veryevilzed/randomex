@@ -46,4 +46,6 @@ defmodule Randomex do
   def select(list = [_|_]), do: Enum.random(list)
 
   def shuffle(list = [_|_]), do: Enum.shuffle(list)
+  def shuffle(%{first: f, last: l}), do: Enum.into(f..l, []) |> shuffle
+
 end
